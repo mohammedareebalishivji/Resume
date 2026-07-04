@@ -1,44 +1,47 @@
-html {
-  cursor: none;
-}
-
-a, button, .cta-btn, .project-card, .cert-card, input, textarea, .nav-links a, .footer-links a, .hero-cta, .magnetic {
-  cursor: none;
+html, body, a, button, .cta-btn, .project-card, .cert-card,
+input, textarea, .nav-links a, .footer-links a, .hero-cta, .magnetic {
+  cursor: none !important;
 }
 
 .cursor-dot {
   position: fixed;
-  width: 6px;
-  height: 6px;
-  background: $accent;
+  width: 8px;
+  height: 8px;
+  background: #d4a853;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 999999;
   transform: translate(-50%, -50%);
-  will-change: left, top;
+  box-shadow: 0 0 12px rgba(212, 168, 83, 0.6);
+  left: 0;
+  top: 0;
 }
 
 .cursor-ring {
   position: fixed;
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid rgba($accent, 0.4);
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(212, 168, 83, 0.5);
   border-radius: 50%;
   pointer-events: none;
-  z-index: 99998;
+  z-index: 999998;
   transform: translate(-50%, -50%);
-  will-change: left, top;
-  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  left: 0;
+  top: 0;
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
 .cursor-ring.hover {
-  width: 56px;
-  height: 56px;
-  border-color: $accent;
-  background: rgba($accent, 0.08);
+  width: 60px;
+  height: 60px;
+  border-color: #d4a853;
+  background: rgba(212, 168, 83, 0.1);
 }
 
 @media (hover: none) and (pointer: coarse) {
-  html { cursor: auto; }
-  .cursor-dot, .cursor-ring { display: none; }
+  html, body, a, button, .cta-btn, .project-card, .cert-card,
+  input, textarea, .nav-links a, .footer-links a, .hero-cta, .magnetic {
+    cursor: auto !important;
+  }
+  .cursor-dot, .cursor-ring { display: none !important; }
 }

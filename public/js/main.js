@@ -498,15 +498,20 @@
 
   // --- Custom Cursor ---
   function initCursor() {
-    if (isReduced) return;
     if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
 
     const dot = document.getElementById('cursor-dot');
     const ring = document.getElementById('cursor-ring');
     if (!dot || !ring) return;
 
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
+    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+    let ringX = mouseX, ringY = mouseY;
+    let raf = null;
+
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+    ring.style.left = mouseX + 'px';
+    ring.style.top = mouseY + 'px';
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
@@ -516,16 +521,15 @@
     });
 
     function follow() {
-      ringX += (mouseX - ringX) * 0.15;
-      ringY += (mouseY - ringY) * 0.15;
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
       ring.style.left = ringX + 'px';
       ring.style.top = ringY + 'px';
-      requestAnimationFrame(follow);
+      raf = requestAnimationFrame(follow);
     }
-    follow();
+    raf = requestAnimationFrame(follow);
 
-    const hoverTargets = 'a, button, .cta-btn, .project-card, .cert-card, .magnetic, .nav-links a, .hero-cta, input, textarea, .footer-links a';
-    document.querySelectorAll(hoverTargets).forEach(el => {
+    document.querySelectorAll('a, button, .cta-btn, .project-card, .cert-card, .magnetic, .nav-links a, .hero-cta, input, textarea, .footer-links a').forEach(el => {
       el.addEventListener('mouseenter', () => ring.classList.add('hover'));
       el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
     });
