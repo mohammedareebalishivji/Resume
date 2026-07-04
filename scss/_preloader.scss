@@ -10,11 +10,15 @@
 .preloader-inner { text-align: center; }
 
 .preloader-logo {
-  font-family: $font-serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  color: $accent;
-  letter-spacing: 0.05em;
+  display: flex; justify-content: center; align-items: center;
+  margin-bottom: 1rem;
   opacity: 0;
+
+  img {
+    display: block;
+    height: clamp(36px, 5vw, 56px);
+    width: auto;
+  }
 }
 
 .preloader-bar-wrap {
