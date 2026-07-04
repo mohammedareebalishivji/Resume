@@ -15,16 +15,10 @@ nav {
   color: #fff;
 
   .nav-logo {
-    display: flex; align-items: center;
-    text-decoration: none;
+    font-family: $font-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.03em;
     opacity: 0;
-
-    img {
-      display: block;
-      mix-blend-mode: normal;
-      height: clamp(28px, 3vw, 36px);
-      width: auto;
-    }
   }
 
   .nav-links {
