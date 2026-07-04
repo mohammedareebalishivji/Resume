@@ -506,6 +506,7 @@
     if (!dot || !ring) return;
 
     let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
 
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
@@ -514,12 +515,14 @@
       dot.style.top = mouseY + 'px';
     });
 
-    gsap.to({}, { duration: 0.016, repeat: -1, onRepeat: () => {
-      gsap.set(ring, {
-        x: mouseX,
-        y: mouseY,
-      });
-    }});
+    function follow() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(follow);
+    }
+    follow();
 
     const hoverTargets = 'a, button, .cta-btn, .project-card, .cert-card, .magnetic, .nav-links a, .hero-cta, input, textarea, .footer-links a';
     document.querySelectorAll(hoverTargets).forEach(el => {
