@@ -16,7 +16,7 @@ const style: Record<string, React.CSSProperties> = {
   wrapper: {
     display: 'block',
     color: '#d4a853',
-    fontSize: 'clamp(0.85rem, 2vw, 1.1rem)',
+    fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
     fontWeight: 500,
     letterSpacing: '0.04em',
     marginTop: '1rem',
@@ -67,6 +67,7 @@ export default function Typewriter() {
 
   return (
     <span style={style.wrapper}>
+      <span style={{ opacity: 0.7, marginRight: '0.4em' }}>&gt;</span>
       <span id="typewriter-text">{display}</span>
       <span style={style.cursor}>|</span>
     </span>
