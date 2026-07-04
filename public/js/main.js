@@ -500,43 +500,27 @@
   function initCursor() {
     if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
 
-    const dot = document.getElementById('cursor-dot');
-    const ring = document.getElementById('cursor-ring');
-    if (!dot || !ring) return;
+    const cursor = document.getElementById('cursor');
+    if (!cursor) return;
 
-    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-    let ringX = mouseX, ringY = mouseY;
-    let raf = null;
-
-    dot.style.left = mouseX + 'px';
-    dot.style.top = mouseY + 'px';
-    ring.style.left = mouseX + 'px';
-    ring.style.top = mouseY + 'px';
+    let mx = -100, my = -100;
 
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.left = mouseX + 'px';
-      dot.style.top = mouseY + 'px';
+      mx = e.clientX;
+      my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
     });
 
-    function follow() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      raf = requestAnimationFrame(follow);
-    }
-    raf = requestAnimationFrame(follow);
-
     document.querySelectorAll('a, button, .cta-btn, .project-card, .cert-card, .magnetic, .nav-links a, .hero-cta, input, textarea, .footer-links a').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
   }
 
   // --- Init ---
   document.addEventListener('DOMContentLoaded', () => {
+    initCursor();
     splitHeroChars();
     initPreloader();
     initParticles();
@@ -545,7 +529,6 @@
     ScrollTrigger.refresh();
 
     setTimeout(() => {
-      initCursor();
       initScrollProgress();
       initSectionWordReveals();
       initProjectCards();
