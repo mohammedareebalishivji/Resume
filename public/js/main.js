@@ -496,31 +496,8 @@
     });
   }
 
-  // --- Custom Cursor ---
-  function initCursor() {
-    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
-
-    const cursor = document.getElementById('cursor');
-    if (!cursor) return;
-
-    let mx = -100, my = -100;
-
-    document.addEventListener('mousemove', (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-    });
-
-    document.querySelectorAll('a, button, .cta-btn, .project-card, .cert-card, .magnetic, .nav-links a, .hero-cta, input, textarea, .footer-links a').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-  }
-
   // --- Init ---
   document.addEventListener('DOMContentLoaded', () => {
-    initCursor();
     splitHeroChars();
     initPreloader();
     initParticles();
