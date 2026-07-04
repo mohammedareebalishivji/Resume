@@ -1,7 +1,11 @@
-* {
+*,
+*::before,
+*::after {
   cursor: none !important;
 }
 
+body { cursor: none !important; }
+
 @media (hover: none) and (pointer: coarse) {
-  * { cursor: auto !important; }
+  *, *::before, *::after, body { cursor: auto !important; }
 }
