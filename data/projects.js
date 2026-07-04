@@ -7,6 +7,27 @@ export const projects = [
     tech: ['React', 'TSX', 'Full-Stack', 'UI/UX'],
   },
   {
+    id: 'stellaar-webapp',
+    tag: 'Founder & Lead Developer',
+    title: 'Stellaar WebApp — Staff & Member Management',
+    desc: 'Built a comprehensive club management system (monorepo: Next.js 16 + Express 5 + Supabase PostgreSQL) with 25+ API route modules, real-time Socket.IO, and RBAC across 16 staff roles. Features include restaurant POS with KOT system, inventory with auto-deduction via standardized recipes, department invoicing with GST calculation, WhatsApp payment receipts, member digital passport with QR cards, family affiliate management (up to 3 per member), AMC automation engine with Jan 15 lock rule, housekeeping task allocation with escalation, asset lifecycle management, concierge ticketing with real-time chat, and an immutable financial ledger. Dual-node architecture with Supabase cloud + local SQLite shadow registry for zero data loss.',
+    tech: ['Next.js', 'Express', 'PostgreSQL', 'Socket.IO', 'TypeScript', 'Prisma'],
+  },
+  {
+    id: 'thestellaar',
+    tag: 'Lead Developer',
+    title: 'The Stellaar — Premium Club Marketing Site',
+    desc: 'Built the official marketing website for The Stellaar Premium Family Club using Next.js 16 with App Router and Framer Motion. Features include cinematic landing page with video background, membership tier showcase (Blue/Silver/Gold with Best Experience badge), lead capture form with WhatsApp redirect, rich blog system with TipTap editor, staff profiles, Google Maps integration, and persistent lead storage via Supabase + local SQLite.',
+    tech: ['Next.js', 'Framer Motion', 'Tailwind CSS', 'Supabase', 'TypeScript'],
+  },
+  {
+    id: 'hayaat',
+    tag: 'Full-Stack Developer',
+    title: 'Hayaat Health Centre — Medical Portal',
+    desc: 'Developed a full-stack medical web application for Hayaat Emergency & Diagnostics Centre in Arusha, Tanzania. Built with React 19 and Vite featuring patient registration and JWT-authenticated login, appointment booking system, health blog with rich content management, and an admin dashboard for user and appointment oversight. Express 5 backend with SQLite3 database and bcrypt password hashing.',
+    tech: ['React', 'Vite', 'Express', 'SQLite', 'JWT', 'Tailwind CSS'],
+  },
+  {
     id: 'pediatrack',
     tag: 'Founder',
     title: 'Pediatrack — Health-Tech Startup',

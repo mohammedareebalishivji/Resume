@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "  Starting portfolio server..."
+PORT=${1:-3000}
+
+echo "  Starting portfolio server on port $PORT..."
 echo ""
 
 # Check for node
 if ! command -v node &> /dev/null; then
   echo "Error: Node.js is required. Install from https://nodejs.org"
   exit 1
+fi
+
+# Kill anything already on the port
+if lsof -ti ":$PORT" &> /dev/null; then
+  echo "  Port $PORT is busy — freeing it..."
+  lsof -ti ":$PORT" | xargs kill -9 2>/dev/null || true
+  sleep 1
 fi
 
 # Install dependencies if needed
@@ -24,4 +33,4 @@ if command -v npx &> /dev/null; then
 fi
 
 # Start server
-exec node server.js
+PORT=$PORT exec node server.js
