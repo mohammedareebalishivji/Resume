@@ -37,11 +37,8 @@ app.use(cors());
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Static files with cache
-app.use(express.static('public', {
-  maxAge: '7d',
-  immutable: true,
-}));
+// Static files
+app.use(express.static('public'));
 
 // EJS view engine
 app.set('view engine', 'ejs');
