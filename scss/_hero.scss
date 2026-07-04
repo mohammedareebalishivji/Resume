@@ -48,6 +48,29 @@
   transform: translateY(120px) rotateX(-40deg);
 }
 
+.hero-typewriter {
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  color: $accent;
+  margin-top: 1rem;
+  min-height: 1.6em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0;
+}
+
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 0.7s steps(1) infinite;
+  color: $accent;
+  font-weight: 300;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .hero-sub {
   font-size: clamp(1rem, 2vw, 1.25rem);
   color: $text-muted;

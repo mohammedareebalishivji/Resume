@@ -75,9 +75,10 @@
     if (isReduced) {
       chars.forEach(c => { c.style.opacity = '1'; c.style.transform = 'none'; });
       navReveal();
-      gsap.to(['.hero-sub', '#hero-cta', '.scroll-cue', '.nav-logo', '.nav-links a'], {
+      gsap.to(['.hero-typewriter', '.hero-sub', '#hero-cta', '.scroll-cue', '.nav-logo', '.nav-links a'], {
         opacity: 1, duration: 0.01, stagger: 0.01
       });
+      initTypewriter();
       return;
     }
 
@@ -91,9 +92,11 @@
       delay: 0.3,
       onComplete: () => {
         gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+        gsap.to('.hero-typewriter', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
         gsap.to('#hero-cta', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.15 });
         gsap.to('.scroll-cue', { opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.3 });
         navReveal();
+        initTypewriter();
       }
     });
   }
@@ -121,6 +124,49 @@
         line.appendChild(span);
       });
     });
+  }
+
+  // --- Typewriter Effect ---
+  function initTypewriter() {
+    const el = document.getElementById('typewriter-text');
+    if (!el) return;
+
+    const roles = [
+      'Full-Stack Developer',
+      'Data Scientist',
+      'Product Engineer',
+      'GenAI Explorer',
+      'Innovation-Driven Builder',
+    ];
+
+    let roleIndex = 0;
+    let displayText = '';
+    let isDeleting = false;
+
+    function type() {
+      const currentRole = roles[roleIndex];
+      if (!isDeleting) {
+        if (displayText.length < currentRole.length) {
+          displayText = currentRole.slice(0, displayText.length + 1);
+          el.textContent = displayText;
+          setTimeout(type, 80);
+        } else {
+          setTimeout(() => { isDeleting = true; type(); }, 2000);
+        }
+      } else {
+        if (displayText.length > 0) {
+          displayText = displayText.slice(0, -1);
+          el.textContent = displayText;
+          setTimeout(type, 50);
+        } else {
+          isDeleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+          setTimeout(type, 300);
+        }
+      }
+    }
+
+    setTimeout(type, 500);
   }
 
   // --- Scroll Progress ---
