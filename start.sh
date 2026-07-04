@@ -32,5 +32,11 @@ if command -v npx &> /dev/null; then
   npx sass scss/style.scss public/css/style.css --style compressed --no-source-map 2>/dev/null || true
 fi
 
+# Build React typewriter component
+if [ -d "typewriter" ]; then
+  echo "  Building React typewriter..."
+  (cd typewriter && npm install --silent && npm run build 2>/dev/null) || echo "  Warning: typewriter build failed, skipping"
+fi
+
 # Start server
 PORT=$PORT exec node server.js
