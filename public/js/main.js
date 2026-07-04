@@ -239,25 +239,107 @@
     }
   }
 
-  // --- Project Cards Stagger ---
-  function initProjectCards() {
-    if (isReduced) {
-      document.querySelectorAll('.project-card').forEach(c => {
-        c.style.opacity = '1'; c.style.transform = 'none';
-      });
-      return;
+  // --- Projects Swiper ---
+  function initProjectsSwiper() {
+    const track = document.getElementById('swiper-track');
+    const slides = track?.querySelectorAll('.swiper-slide');
+    const prevBtn = document.getElementById('swiper-prev');
+    const nextBtn = document.getElementById('swiper-next');
+    const dotsContainer = document.getElementById('swiper-dots');
+    if (!track || !slides || slides.length === 0) return;
+
+    let index = 0;
+    let isAnimating = false;
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'swiper-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    });
+    const dots = dotsContainer.querySelectorAll('.swiper-dot');
+
+    function goTo(i) {
+      if (isAnimating || i === index) return;
+      isAnimating = true;
+      index = i;
+      track.style.transform = 'translateX(-' + (index * 100) + '%)';
+      dots.forEach(d => d.classList.remove('active'));
+      dots[index].classList.add('active');
+      updateButtons();
+      setTimeout(() => { isAnimating = false; }, 500);
     }
-    gsap.to('.project-card', {
-      opacity: 1, y: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '#projects-grid',
-        start: 'top 80%',
-        toggleActions: 'play none none reverse',
+
+    function updateButtons() {
+      prevBtn.classList.toggle('hidden', index === 0);
+      nextBtn.classList.toggle('hidden', index === slides.length - 1);
+    }
+
+    prevBtn.addEventListener('click', () => goTo(index - 1));
+    nextBtn.addEventListener('click', () => goTo(index + 1));
+
+    // Touch / drag support
+    let startX = 0;
+    let isDragging = false;
+    let dragOffset = 0;
+
+    track.addEventListener('pointerdown', (e) => {
+      startX = e.clientX;
+      isDragging = true;
+      dragOffset = 0;
+      track.style.transition = 'none';
+      track.setPointerCapture(e.pointerId);
+    });
+
+    track.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      dragOffset = e.clientX - startX;
+      const pct = -index * 100 + (dragOffset / track.parentElement.offsetWidth) * 100;
+      track.style.transform = 'translateX(' + pct + '%)';
+    });
+
+    track.addEventListener('pointerup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      track.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+      if (Math.abs(dragOffset) > 60) {
+        if (dragOffset < 0 && index < slides.length - 1) goTo(index + 1);
+        else if (dragOffset > 0 && index > 0) goTo(index - 1);
+        else goTo(index);
+      } else {
+        goTo(index);
       }
     });
+
+    // Reveal on scroll
+    if (!isReduced) {
+      gsap.from('.swiper-slide .project-card', {
+        opacity: 0, y: 40,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#projects-swiper',
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        }
+      });
+      gsap.to('.swiper-btn', {
+        opacity: 1,
+        duration: 0.6,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '#projects-swiper',
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        }
+      });
+    } else {
+      document.querySelectorAll('.swiper-slide .project-card').forEach(c => {
+        c.style.opacity = '1'; c.style.transform = 'none';
+      });
+    }
   }
 
   // --- Skill Category Reveal ---
@@ -554,7 +636,7 @@
     setTimeout(() => {
       initScrollProgress();
       initSectionWordReveals();
-      initProjectCards();
+      initProjectsSwiper();
       initSkillsReveal();
       initAchievementsReveal();
       initFooterReveal();
