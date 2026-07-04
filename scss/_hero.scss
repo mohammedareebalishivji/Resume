@@ -48,6 +48,11 @@
   transform: translateY(120px) rotateX(-40deg);
 }
 
+@keyframes tw-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .hero-sub {
   font-size: clamp(1rem, 2vw, 1.25rem);
   color: $text-muted;
