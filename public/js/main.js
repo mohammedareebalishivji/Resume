@@ -131,42 +131,42 @@
     const el = document.getElementById('typewriter-text');
     if (!el) return;
 
-    const roles = [
-      'Full-Stack Developer',
+    const strings = [
+      'Software Engineer',
+      'AI Engineer',
+      'Full Stack Developer',
       'Data Scientist',
-      'Product Engineer',
-      'GenAI Explorer',
-      'Innovation-Driven Builder',
+      'ML Engineer',
     ];
 
-    let roleIndex = 0;
-    let displayText = '';
-    let isDeleting = false;
+    let index = 0;
+    let display = '';
+    let deleting = false;
 
-    function type() {
-      const currentRole = roles[roleIndex];
-      if (!isDeleting) {
-        if (displayText.length < currentRole.length) {
-          displayText = currentRole.slice(0, displayText.length + 1);
-          el.textContent = displayText;
-          setTimeout(type, 80);
+    function tick() {
+      const current = strings[index];
+      if (!deleting) {
+        if (display.length < current.length) {
+          display = current.slice(0, display.length + 1);
+          el.textContent = display;
+          setTimeout(tick, 80);
         } else {
-          setTimeout(() => { isDeleting = true; type(); }, 2000);
+          setTimeout(() => { deleting = true; tick(); }, 2000);
         }
       } else {
-        if (displayText.length > 0) {
-          displayText = displayText.slice(0, -1);
-          el.textContent = displayText;
-          setTimeout(type, 50);
+        if (display.length > 0) {
+          display = display.slice(0, -1);
+          el.textContent = display;
+          setTimeout(tick, 50);
         } else {
-          isDeleting = false;
-          roleIndex = (roleIndex + 1) % roles.length;
-          setTimeout(type, 300);
+          deleting = false;
+          index = (index + 1) % strings.length;
+          setTimeout(tick, 300);
         }
       }
     }
 
-    setTimeout(type, 500);
+    setTimeout(tick, 400);
   }
 
   // --- Scroll Progress ---
