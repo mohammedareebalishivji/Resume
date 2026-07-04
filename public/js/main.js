@@ -496,6 +496,38 @@
     });
   }
 
+  // --- Custom Cursor ---
+  function initCursor() {
+    if (isReduced) return;
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring) return;
+
+    let mouseX = 0, mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+    });
+
+    gsap.to({}, { duration: 0.016, repeat: -1, onRepeat: () => {
+      gsap.set(ring, {
+        x: mouseX,
+        y: mouseY,
+      });
+    }});
+
+    const hoverTargets = 'a, button, .cta-btn, .project-card, .cert-card, .magnetic, .nav-links a, .hero-cta, input, textarea, .footer-links a';
+    document.querySelectorAll(hoverTargets).forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+  }
+
   // --- Init ---
   document.addEventListener('DOMContentLoaded', () => {
     splitHeroChars();
@@ -506,6 +538,7 @@
     ScrollTrigger.refresh();
 
     setTimeout(() => {
+      initCursor();
       initScrollProgress();
       initSectionWordReveals();
       initProjectCards();
