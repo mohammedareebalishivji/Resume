@@ -75,10 +75,9 @@
     if (isReduced) {
       chars.forEach(c => { c.style.opacity = '1'; c.style.transform = 'none'; });
       navReveal();
-      gsap.to(['.hero-typewriter', '.hero-sub', '#hero-cta', '.scroll-cue', '.nav-logo', '.nav-links a'], {
+      gsap.to(['.hero-sub', '#hero-cta', '.scroll-cue', '.nav-logo', '.nav-links a'], {
         opacity: 1, duration: 0.01, stagger: 0.01
       });
-      initTypewriter();
       return;
     }
 
@@ -92,11 +91,9 @@
       delay: 0.3,
       onComplete: () => {
         gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
-        gsap.to('.hero-typewriter', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
         gsap.to('#hero-cta', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.15 });
         gsap.to('.scroll-cue', { opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.3 });
         navReveal();
-        initTypewriter();
       }
     });
   }
@@ -124,49 +121,6 @@
         line.appendChild(span);
       });
     });
-  }
-
-  // --- Typewriter Effect ---
-  function initTypewriter() {
-    const el = document.getElementById('typewriter-text');
-    if (!el) return;
-
-    const strings = [
-      'Software Engineer',
-      'AI Engineer',
-      'Full Stack Developer',
-      'Data Scientist',
-      'ML Engineer',
-    ];
-
-    let index = 0;
-    let display = '';
-    let deleting = false;
-
-    function tick() {
-      const current = strings[index];
-      if (!deleting) {
-        if (display.length < current.length) {
-          display = current.slice(0, display.length + 1);
-          el.textContent = display;
-          setTimeout(tick, 80);
-        } else {
-          setTimeout(() => { deleting = true; tick(); }, 2000);
-        }
-      } else {
-        if (display.length > 0) {
-          display = display.slice(0, -1);
-          el.textContent = display;
-          setTimeout(tick, 50);
-        } else {
-          deleting = false;
-          index = (index + 1) % strings.length;
-          setTimeout(tick, 300);
-        }
-      }
-    }
-
-    setTimeout(tick, 400);
   }
 
   // --- Scroll Progress ---
